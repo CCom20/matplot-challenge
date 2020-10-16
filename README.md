@@ -3,10 +3,15 @@ The following analysis looks at the performance of difference drugs when treatin
 
 ## Cleaning the Data
 After combining the data, the Mouse IDs were searched for duplicates. Of the 249, one mouse was duplicated - mouse g989.
+
     mouse_duplicates_single = combined_study_df.loc[combined_study_df.duplicated(subset=["Mouse ID", "Timepoint"]), "Mouse ID"].unique()
-Looking at all the duplicate mouse data, it became clear that the same Mouse ID has two measurements at each timepoint where other mice only have one measurement. 
+
+Looking at all the duplicate mouse data, it became clear that the same Mouse ID has two measurements at each timepoint where other mice only have one measurement.
+
     mouse_duplicate_g989 = combined_study_df.loc[combined_study_df["Mouse ID"] == "g989"]
+
 Since we do not know the actual measurement for the various stats, we cannot consider the data reliable. Therefore, it is necessary to drop the duplicate mouse from the dataset completely.
+
     combined_study_df_cleaned = combined_study_df_cleaned.set_index("Mouse ID").drop(index="g989")
     combined_study_df_cleaned = combined_study_df_cleaned.reset_index()
 
